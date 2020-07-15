@@ -1,0 +1,38 @@
+{
+  "name": "sterblue-frontend-test",
+  "version": "1.0.0",
+  "description": "A small repository to start your frontend skill test.",
+  "author": "Hugo Raynal <hugo.raynal@sterblue.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "start-storybook -p 9080 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "0.8.0",
+    "@emotion/core": "10.0.28",
+    "@emotion/styled": "10.0.27",
+    "emotion-theming": "10.0.27",
+    "lodash": "4.17.15",
+    "lodash.debounce": "^4.0.8",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.10.4",
+    "@storybook/addon-actions": "5.3.19",
+    "@storybook/addon-links": "5.3.19",
+    "@storybook/addons": "5.3.19",
+    "@storybook/preset-create-react-app": "3.1.2",
+    "@storybook/react": "5.3.18",
+    "@types/node": "14.0.14",
+    "@types/react": "16.9.41",
+    "@types/react-dom": "16.9.8",
+    "babel-loader": "8.1.0",
+    "react-scripts": "3.4.1",
+    "typescript": "3.9.6"
+  }
+}

@@ -4,13 +4,9 @@ import { Stack, Flex, MenuItem } from "@chakra-ui/core"
 
 const SectionConfig = (props) => {
     const { section, path, name, onChange } = props
-    let { getSectionLabel, parentEnabled } = props
+    let { getSectionLabel } = props
     if (!getSectionLabel) {
         getSectionLabel = (key) => key
-    }
-
-    if (parentEnabled === undefined) {
-        parentEnabled = true
     }
 
     const handleChange = (e) => {
@@ -28,14 +24,14 @@ const SectionConfig = (props) => {
 
     return (
         <Flex flexDir="column">
-            <MenuItem onClick={handleChange} onKeyDown={handleKey} isDisabled={!parentEnabled}>
-                <SectionToggle enabled={section.enabled} disabled={!parentEnabled} path={path} onChange={onChange}>
+            <MenuItem onClick={handleChange} onKeyDown={handleKey}>
+                <SectionToggle enabled={section.enabled} path={path} onChange={onChange}>
                     {getSectionLabel(name)}
                 </SectionToggle>
             </MenuItem>
 
             {childSections ? (
-                <Stack pl={6} mt={0} spacing={2}>
+                <Stack pl={8} mt={0} spacing={2}>
                     {childSections.map((childSection) => {
                         const childPath = `${path ? path + "." : ""}children.${childSection.name}`
                         return (
@@ -46,7 +42,6 @@ const SectionConfig = (props) => {
                                 section={childSection.section}
                                 path={childPath}
                                 onChange={onChange}
-                                parentEnabled={section.enabled}
                             />
                         )
                     })}

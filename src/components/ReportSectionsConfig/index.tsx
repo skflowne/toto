@@ -13,7 +13,7 @@ const ReportSectionsConfig = (props) => {
     const debouncedRender = useRef(
         debounce((config) => {
             console.log("render report", config)
-        }, 1000)
+        }, 1750)
     )
 
     const setChildrenEnabled = (section, enabled) => {
@@ -30,10 +30,28 @@ const ReportSectionsConfig = (props) => {
         return { ...section, enabled, children: newChildren }
     }
 
+    const setParentsEnabled = (config, path, enabled) => {
+        if (!path) return config
+
+        const parents: string[] = path.split(".children.")
+        if (parents.length > 1) {
+            const parentPath: string = path.replace(`.children.${parents[parents.length - 1]}`, "")
+            const newParentSection = { ...get(config, parentPath), enabled }
+
+            return setParentsEnabled({ ...set(config, parentPath, newParentSection) }, parentPath, enabled)
+        }
+
+        return { ...config, enabled }
+    }
+
     const handleChange = (path, enabled) => {
         let newSection = path ? { ...get(config, path), enabled } : { ...config, enabled }
         newSection = setChildrenEnabled(newSection, enabled)
-        const newConfig = path ? { ...set(config, path, newSection) } : newSection
+
+        let newConfig = path ? { ...set(config, path, newSection) } : newSection
+        if (enabled) {
+            newConfig = setParentsEnabled(newConfig, path, enabled)
+        }
 
         setConfig(newConfig)
         debouncedRender.current(newConfig)

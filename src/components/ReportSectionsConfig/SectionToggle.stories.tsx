@@ -1,7 +1,6 @@
 import React from "react"
 
-import { ThemeProvider } from "@chakra-ui/core"
-import { theme } from "@chakra-ui/core"
+import { ThemeProvider, Checkbox, Input, theme } from "@chakra-ui/core"
 
 import SectionToggle from "./SectionToggle"
 
@@ -12,9 +11,25 @@ export default { title: "Section Toggle" }
 
 // export const Basic = () => <MyComponent />;
 
-export const Basic = () => (
+export const Checked = () => (
     <ThemeProvider theme={theme}>
         <SectionToggle enabled={true} path="report.test">
+            Test
+        </SectionToggle>
+    </ThemeProvider>
+)
+
+export const Unchecked = () => (
+    <ThemeProvider theme={theme}>
+        <SectionToggle enabled={false} path="report.test">
+            Test
+        </SectionToggle>
+    </ThemeProvider>
+)
+
+export const Disabled = () => (
+    <ThemeProvider theme={theme}>
+        <SectionToggle enabled={false} disabled={true} path="report.test">
             Test
         </SectionToggle>
     </ThemeProvider>

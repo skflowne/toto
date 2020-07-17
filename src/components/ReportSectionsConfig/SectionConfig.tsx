@@ -1,12 +1,26 @@
 import React from "react"
 import SectionToggle from "./SectionToggle"
-import { Stack, Flex } from "@chakra-ui/core"
+import { Stack, Flex, MenuItem } from "@chakra-ui/core"
 
 const SectionConfig = (props) => {
     const { section, path, name, onChange } = props
-    let { getSectionLabel } = props
+    let { getSectionLabel, parentEnabled } = props
     if (!getSectionLabel) {
         getSectionLabel = (key) => key
+    }
+
+    if (parentEnabled === undefined) {
+        parentEnabled = true
+    }
+
+    const handleChange = (e) => {
+        onChange && onChange(path, !section.enabled)
+    }
+
+    const handleKey = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            handleChange(e)
+        }
     }
 
     const childSections =
@@ -14,12 +28,14 @@ const SectionConfig = (props) => {
 
     return (
         <Flex flexDir="column">
-            <SectionToggle enabled={section.enabled} path={path} onChange={onChange}>
-                {getSectionLabel(name)}
-            </SectionToggle>
+            <MenuItem onClick={handleChange} onKeyDown={handleKey} isDisabled={!parentEnabled}>
+                <SectionToggle enabled={section.enabled} disabled={!parentEnabled} path={path} onChange={onChange}>
+                    {getSectionLabel(name)}
+                </SectionToggle>
+            </MenuItem>
 
             {childSections ? (
-                <Stack pl={6} mt={1} spacing={1}>
+                <Stack pl={6} mt={0} spacing={2}>
                     {childSections.map((childSection) => {
                         const childPath = `${path ? path + "." : ""}children.${childSection.name}`
                         return (
@@ -30,6 +46,7 @@ const SectionConfig = (props) => {
                                 section={childSection.section}
                                 path={childPath}
                                 onChange={onChange}
+                                parentEnabled={section.enabled}
                             />
                         )
                     })}

@@ -1,6 +1,6 @@
-import React, { useState, useRef, Children, useCallback, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import SectionConfig from "./SectionConfig"
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/core"
+import { Button, Menu, MenuButton, MenuList, theme, MenuItem } from "@chakra-ui/core"
 import get from "lodash.get"
 import set from "lodash.set"
 import debounce from "lodash.debounce"
@@ -45,7 +45,7 @@ const ReportSectionsConfig = (props) => {
         })
 
     return (
-        <Menu>
+        <Menu closeOnSelect={false} closeOnBlur={true}>
             <MenuButton as={Button} rightIcon="chevron-down">
                 Sections
             </MenuButton>

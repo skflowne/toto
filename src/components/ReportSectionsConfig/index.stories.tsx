@@ -12,25 +12,59 @@ export default { title: "Report sections config" }
 
 // export const Basic = () => <MyComponent />;
 
-export const Basic = () => (
-    <ThemeProvider theme={theme}>
-        <ReportSectionsConfig
-            reportConfig={{
-                "enabled": true,
-                "children": {
-                    "coverPage": { "enabled": true },
-                    "summary": { "enabled": true },
-                    "anomalyDefinitions": { "enabled": true },
-                    "missionReport": {
-                        "enabled": true,
-                        "children": {
-                            "missionDescription": { "enabled": true },
-                            "missionCustomerInfo": { "enabled": true },
+const baseReportConfig = {
+    "enabled": true,
+    "children": {
+        "coverPage": { "enabled": true },
+        "summary": { "enabled": true },
+        "anomalyDefinitions": { "enabled": true },
+        "missionReport": {
+            "enabled": true,
+            "children": {
+                "missionDescription": { "enabled": true },
+                "missionCustomerInfo": { "enabled": true },
+            },
+        },
+    },
+}
+
+const longReportConfig = {
+    "enabled": true,
+    "children": {
+        "coverPage": { "enabled": true },
+        "summary": { "enabled": true },
+        "anomalyDefinitions": { "enabled": true },
+        "missionReport": {
+            "enabled": true,
+            "children": {
+                "missionDescription": {
+                    "enabled": true,
+                    "children": {
+                        "descriptionDetails": {
+                            "enabled": true,
+                            "children": {
+                                "detailsMoreAndMoreAndMore": {
+                                    "enabled": true,
+                                    "children": {
+                                        "detailsMoreAndMoreAndMore": { "enabled": true },
+                                        "detailsOther": { "enabled": true },
+                                    },
+                                },
+                                "detailsOther": { "enabled": true },
+                            },
                         },
+                        "descriptionOther": { "enabled": true },
                     },
                 },
-            }}
-        />
+                "missionCustomerInfo": { "enabled": true },
+            },
+        },
+    },
+}
+
+export const Basic = () => (
+    <ThemeProvider theme={theme}>
+        <ReportSectionsConfig reportConfig={baseReportConfig} />
     </ThemeProvider>
 )
 
@@ -42,24 +76,45 @@ export const InToolbar = () => {
                 <Button>Test</Button>
                 <Button>Test</Button>
                 <Button>Test</Button>
-                <ReportSectionsConfig
-                    reportConfig={{
-                        "enabled": true,
-                        "children": {
-                            "coverPage": { "enabled": true },
-                            "summary": { "enabled": true },
-                            "anomalyDefinitions": { "enabled": true },
-                            "missionReport": {
-                                "enabled": true,
-                                "children": {
-                                    "missionDescription": { "enabled": true },
-                                    "missionCustomerInfo": { "enabled": true },
-                                },
-                            },
-                        },
-                    }}
-                />
+                <ReportSectionsConfig reportConfig={baseReportConfig} />
             </Flex>
+        </ThemeProvider>
+    )
+}
+
+export const MiddleInToolbar = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <Flex>
+                <Button>Test</Button>
+                <Button>Test</Button>
+                <ReportSectionsConfig reportConfig={baseReportConfig} />
+                <Button>Test</Button>
+                <Button>Test</Button>
+            </Flex>
+        </ThemeProvider>
+    )
+}
+
+export const FirstInToolbar = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <Flex>
+                <ReportSectionsConfig reportConfig={baseReportConfig} />
+                <Button>Test</Button>
+                <Button>Test</Button>
+
+                <Button>Test</Button>
+                <Button>Test</Button>
+            </Flex>
+        </ThemeProvider>
+    )
+}
+
+export const DeepConfig = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <ReportSectionsConfig reportConfig={longReportConfig} />
         </ThemeProvider>
     )
 }

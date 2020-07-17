@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, Children, useCallback, useEffect } from "react"
 import SectionConfig from "./SectionConfig"
 import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/core"
 import get from "lodash.get"
@@ -10,19 +10,33 @@ const ReportSectionsConfig = (props) => {
 
     const [config, setConfig] = useState(reportConfig)
 
-    const renderReport = () => {
-        console.log("render report", config)
+    const debouncedRender = useRef(
+        debounce((config) => {
+            console.log("render report", config)
+        }, 1000)
+    )
+
+    const setChildrenEnabled = (section, enabled) => {
+        const children = section.children
+        let newChildren = {}
+        if (children) {
+            newChildren = Object.keys(children).reduce((obj, key) => {
+                const childSection = children[key]
+                obj[key] = setChildrenEnabled(childSection, enabled)
+                return obj
+            }, {})
+        }
+
+        return { ...section, enabled, children: newChildren }
     }
 
-    const debouncedRender = useRef(debounce(renderReport, 1250))
-
     const handleChange = (path, enabled) => {
-        const newSection = path ? { ...get(config, path), enabled } : { ...config, enabled }
-
+        let newSection = path ? { ...get(config, path), enabled } : { ...config, enabled }
+        newSection = setChildrenEnabled(newSection, enabled)
         const newConfig = path ? { ...set(config, path, newSection) } : newSection
 
         setConfig(newConfig)
-        debouncedRender.current()
+        debouncedRender.current(newConfig)
     }
 
     const sectionKeyToLabel = (key) =>

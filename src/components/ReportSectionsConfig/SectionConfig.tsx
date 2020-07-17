@@ -1,15 +1,22 @@
-import React from "react"
+import React, { SyntheticEvent } from "react"
 import SectionToggle from "./SectionToggle"
 import { Stack, Flex, MenuItem } from "@chakra-ui/core"
+import { ReportConfig } from "../../types"
 
-const SectionConfig = (props) => {
+const SectionConfig: React.FC<{
+    section: ReportConfig
+    path: string
+    name: string
+    onChange: (path: string, enabled: boolean) => void
+    getSectionLabel: (name: string) => string
+}> = (props) => {
     const { section, path, name, onChange } = props
     let { getSectionLabel } = props
     if (!getSectionLabel) {
         getSectionLabel = (key) => key
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: SyntheticEvent) => {
         onChange && onChange(path, !section.enabled)
     }
 
@@ -19,7 +26,7 @@ const SectionConfig = (props) => {
         }
     }
 
-    const childSections =
+    const childSections: { name: string; section: ReportConfig }[] =
         section.children && Object.entries(section.children).map(([key, value]) => ({ name: key, section: value }))
 
     return (
@@ -33,7 +40,7 @@ const SectionConfig = (props) => {
             {childSections ? (
                 <Stack pl={8} mt={0} spacing={2}>
                     {childSections.map((childSection) => {
-                        const childPath = `${path ? path + "." : ""}children.${childSection.name}`
+                        const childPath: string = `${path ? path + "." : ""}children.${childSection.name}`
                         return (
                             <SectionConfig
                                 key={childPath}

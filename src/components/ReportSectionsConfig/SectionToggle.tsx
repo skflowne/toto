@@ -1,5 +1,5 @@
 import React from "react"
-import { Checkbox, theme, MenuItemOption, MenuItem } from "@chakra-ui/core"
+import { Checkbox, theme } from "@chakra-ui/core"
 import styled from "@emotion/styled"
 
 const StyledCheckbox = styled(Checkbox)`
@@ -8,15 +8,19 @@ const StyledCheckbox = styled(Checkbox)`
     }
 `
 
-const SectionToggle = (props) => {
-    const { enabled, disabled, children, path, onChange } = props
+const SectionToggle: React.FC<{
+    enabled: boolean
+    path: string
+    onChange: (path: string, enabled: boolean) => void
+}> = (props) => {
+    const { enabled, path, onChange, children } = props
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent) => {
         e.stopPropagation()
         onChange && onChange(path, !enabled)
     }
 
-    const stopClickPropagation = (e) => {
+    const stopClickPropagation = (e: React.MouseEvent) => {
         e.stopPropagation()
     }
 
@@ -25,7 +29,6 @@ const SectionToggle = (props) => {
             className="custom-checkbox"
             fontFamily={theme.fonts.body}
             isChecked={enabled}
-            isDisabled={disabled}
             onClick={stopClickPropagation}
             onChange={handleChange}
         >

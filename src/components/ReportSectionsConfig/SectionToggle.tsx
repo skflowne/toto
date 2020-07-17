@@ -4,16 +4,17 @@ import styled from "@emotion/styled"
 
 const StyledCheckbox = styled(Checkbox)`
     & > div[aria-hidden="true"] {
-        color: ${theme.colors.gray[300]};
+        color: ${(props) => theme.colors[props.variantColor][800]};
     }
 `
 
 const SectionToggle: React.FC<{
     enabled: boolean
     path: string
+    variant?: string
     onChange: (path: string, enabled: boolean) => void
 }> = (props) => {
-    const { enabled, path, onChange, children } = props
+    const { enabled, path, variant, onChange, children } = props
 
     const handleChange = (e: React.ChangeEvent) => {
         e.stopPropagation()
@@ -31,6 +32,7 @@ const SectionToggle: React.FC<{
             isChecked={enabled}
             onClick={stopClickPropagation}
             onChange={handleChange}
+            variantColor={variant || "blue"}
         >
             {children}
         </StyledCheckbox>

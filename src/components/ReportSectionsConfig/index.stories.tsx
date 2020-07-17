@@ -118,3 +118,24 @@ export const DeepConfig = () => {
         </ThemeProvider>
     )
 }
+
+export const DeepWithDepthColoring = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <ReportSectionsConfig reportConfig={longReportConfig} depthColoring />
+        </ThemeProvider>
+    )
+}
+
+export const DeepWithCustomColorDepthColoring = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <ReportSectionsConfig
+                reportConfig={longReportConfig}
+                depthColoring
+                itemsVariant="teal"
+                checkboxVariant="green"
+            />
+        </ThemeProvider>
+    )
+}

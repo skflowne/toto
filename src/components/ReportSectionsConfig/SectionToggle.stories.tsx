@@ -28,3 +28,23 @@ export const Unchecked = () => (
         </SectionToggle>
     </ThemeProvider>
 )
+
+export const CustomColorUnchecked = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <SectionToggle enabled={false} path="report.test" onChange={noop} variant="green">
+                Test
+            </SectionToggle>
+        </ThemeProvider>
+    )
+}
+
+export const CustomColorChecked = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <SectionToggle enabled={true} path="report.test" onChange={noop} variant="green">
+                Test
+            </SectionToggle>
+        </ThemeProvider>
+    )
+}

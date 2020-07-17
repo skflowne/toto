@@ -1,13 +1,23 @@
 import React, { useState, useRef } from "react"
-import SectionConfig from "./SectionConfig"
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/core"
 import get from "lodash.get"
 import set from "lodash.set"
 import debounce from "lodash.debounce"
+
+import { FaBuffer, FaCheckCircle, FaWindowClose } from "react-icons/fa"
+
+import { Button, Menu, MenuButton, MenuList, Box } from "@chakra-ui/core"
+
+import SectionConfig from "./SectionConfig"
+
 import { ReportConfig, ReportConfigChildren } from "../../types"
 
-const ReportSectionsConfig: React.FC<{ reportConfig: ReportConfig }> = (props) => {
-    const { reportConfig } = props
+const ReportSectionsConfig: React.FC<{
+    reportConfig: ReportConfig
+    depthColoring?: boolean
+    itemsVariant?: string
+    checkboxVariant?: string
+}> = (props) => {
+    const { reportConfig, depthColoring, itemsVariant, checkboxVariant } = props
 
     const [config, setConfig] = useState(reportConfig)
 
@@ -65,15 +75,23 @@ const ReportSectionsConfig: React.FC<{ reportConfig: ReportConfig }> = (props) =
 
     return (
         <Menu closeOnSelect={false} closeOnBlur={true}>
-            <MenuButton as={Button} rightIcon="chevron-down">
-                Sections
+            <MenuButton as={Button} leftIcon={FaBuffer} rightIcon="chevron-down" variantColor="black" variant="outline">
+                Sections{" "}
+                {config.enabled ? (
+                    <Box ml={2} as={FaCheckCircle} color="green.300" />
+                ) : (
+                    <Box ml={2} as={FaWindowClose} color="red.300" />
+                )}
             </MenuButton>
-            <MenuList p={2}>
+            <MenuList p={4} maxH="80vh" overflowY="scroll">
                 <SectionConfig
                     name="Report"
                     getSectionLabel={sectionKeyToLabel}
                     section={config}
                     path={null}
+                    depthColoring={depthColoring}
+                    itemsVariant={itemsVariant}
+                    checkboxVariant={checkboxVariant}
                     onChange={handleChange}
                 />
             </MenuList>

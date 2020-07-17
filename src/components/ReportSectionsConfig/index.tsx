@@ -83,7 +83,7 @@ const ReportSectionsConfig: React.FC<{
                     <Box ml={2} as={FaWindowClose} color="red.300" />
                 )}
             </MenuButton>
-            <MenuList p={4} maxH="80vh" overflowY="scroll">
+            <MenuList p={4} maxH="80vh" overflowY="auto">
                 <SectionConfig
                     name="Report"
                     getSectionLabel={sectionKeyToLabel}
